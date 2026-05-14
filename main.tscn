@@ -44,7 +44,6 @@ stencil_flags = 2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lquwl"]
 depth_draw_mode = 1
-roughness = 0.3
 uv1_scale = Vector3(5, 5, 5)
 texture_filter = 0
 
