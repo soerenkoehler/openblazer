@@ -48,6 +48,8 @@ depth_draw_mode = 1
 uv1_scale = Vector3(5, 5, 5)
 texture_filter = 0
 
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ig7tw"]
+
 [node name="Main" type="Node3D" unique_id=579512571]
 
 [node name="Light" type="DirectionalLight3D" parent="." unique_id=240048722]
@@ -59,11 +61,13 @@ camera_attributes = SubResource("CameraAttributesPractical_ig7tw")
 
 [node name="Debug Camera" type="Marker3D" parent="." unique_id=1614610998]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 30, 50)
+visible = false
 
 [node name="Camera3D" type="Camera3D" parent="Debug Camera" unique_id=1589901871]
 transform = Transform3D(0.70710677, -0.49999994, 0.49999997, 0, 0.7071067, 0.70710677, -0.70710677, -0.49999994, 0.49999997, 0, 0, 0)
 
 [node name="Ground" type="StaticBody3D" parent="." unique_id=369543606]
+visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" unique_id=1317833846]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
@@ -75,6 +79,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_0xm2m")
 
 [node name="Ball" type="RigidBody3D" parent="." unique_id=2095023442]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ball" unique_id=1260917984]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
@@ -85,3 +90,10 @@ debug_fill = false
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
 mesh = SubResource("SphereMesh_ig7tw")
 surface_material_override/0 = SubResource("StandardMaterial3D_lquwl")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="." unique_id=536495175]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D" unique_id=48999075]
+shape = SubResource("ConvexPolygonShape3D_ig7tw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D" unique_id=2023695122]
