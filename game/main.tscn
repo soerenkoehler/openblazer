@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://gyfurjc54xl1"]
 
-[ext_resource type="Texture2D" uid="uid://b0elvbweai7ni" path="res://res/img/checker_w.png" id="1_ig7tw"]
+[ext_resource type="Texture2D" uid="uid://b0elvbweai7ni" path="res://img/checker_w.png" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://bdx1u4jr4w8i0" path="res://3d/droid.glb" id="2_0xm2m"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ig7tw"]
 
@@ -48,7 +49,8 @@ depth_draw_mode = 1
 uv1_scale = Vector3(5, 5, 5)
 texture_filter = 0
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ig7tw"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_0xm2m"]
+size = Vector3(12, 10, 12)
 
 [node name="Main" type="Node3D" unique_id=579512571]
 
@@ -61,17 +63,16 @@ camera_attributes = SubResource("CameraAttributesPractical_ig7tw")
 
 [node name="Debug Camera" type="Marker3D" parent="." unique_id=1614610998]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 30, 50)
-visible = false
 
 [node name="Camera3D" type="Camera3D" parent="Debug Camera" unique_id=1589901871]
 transform = Transform3D(0.70710677, -0.49999994, 0.49999997, 0, 0.7071067, 0.70710677, -0.70710677, -0.49999994, 0.49999997, 0, 0, 0)
 
 [node name="Ground" type="StaticBody3D" parent="." unique_id=369543606]
-visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" unique_id=1317833846]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 shape = SubResource("BoxShape3D_ig7tw")
+debug_color = Color(0, 0.85000014, 1, 1)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ground" unique_id=205486371]
 mesh = SubResource("PlaneMesh_ig7tw")
@@ -79,11 +80,11 @@ surface_material_override/0 = SubResource("StandardMaterial3D_0xm2m")
 
 [node name="Ball" type="RigidBody3D" parent="." unique_id=2095023442]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
-visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ball" unique_id=1260917984]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
 shape = SubResource("SphereShape3D_ig7tw")
+debug_color = Color(0.8333335, 0, 1, 1)
 debug_fill = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ball" unique_id=308380919]
@@ -92,8 +93,12 @@ mesh = SubResource("SphereMesh_ig7tw")
 surface_material_override/0 = SubResource("StandardMaterial3D_lquwl")
 
 [node name="RigidBody3D" type="RigidBody3D" parent="." unique_id=536495175]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, 25)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D" unique_id=48999075]
-shape = SubResource("ConvexPolygonShape3D_ig7tw")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -3)
+shape = SubResource("BoxShape3D_0xm2m")
+debug_color = Color(0.8333335, 0, 1, 1)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D" unique_id=2023695122]
+[node name="droid" parent="RigidBody3D" unique_id=1721679896 instance=ExtResource("2_0xm2m")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 2, 0)
