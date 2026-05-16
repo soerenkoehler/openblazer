@@ -1,0 +1,16 @@
+{
+    "folders": [
+        {
+            "path": "."
+        }
+    ],
+    "settings": {
+        "files.exclude": {
+            ".vscode": true,
+            "**/.godot": true,
+            "**/*.uid": true,
+            "**/*.import": true,
+            "**/*.blend1": true
+        }
+    }
+}

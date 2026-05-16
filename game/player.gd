@@ -37,6 +37,5 @@ func _update_albedo(path: String, color: Color, texture: Texture2D) -> void:
 			material = StandardMaterial3D.new()
 			mesh_node.material_override = material
 
-		# Assign the forwarded properties
 		material.albedo_color = color
 		material.albedo_texture = texture

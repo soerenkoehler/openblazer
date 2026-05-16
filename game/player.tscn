@@ -6,9 +6,6 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_0xm2m"]
 size = Vector3(3, 2.5, 3)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4flbx"]
-resource_local_to_scene = true
-
 [node name="Player" type="RigidBody3D" unique_id=265701564]
 script = ExtResource("1_onrkg")
 
@@ -21,8 +18,5 @@ debug_color = Color(0.8333335, 0, 1, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.84, 0)
 
 [node name="Droid" parent="." unique_id=696408194 instance=ExtResource("1_4flbx")]
-
-[node name="Cabin" parent="Droid" index="0" unique_id=1941011358]
-surface_material_override/0 = SubResource("StandardMaterial3D_4flbx")
 
 [editable path="Droid"]
