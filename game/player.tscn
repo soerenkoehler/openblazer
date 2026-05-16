@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://bwt4rr25v4cft"]
+
+[ext_resource type="PackedScene" uid="uid://de3okia1plc2x" path="res://3d/droid.gltf" id="1_4flbx"]
+[ext_resource type="Script" uid="uid://r4qq53kjp5uq" path="res://player.gd" id="1_onrkg"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0xm2m"]
+size = Vector3(3, 2.5, 3)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4flbx"]
+resource_local_to_scene = true
+
+[node name="Player" type="RigidBody3D" unique_id=265701564]
+script = ExtResource("1_onrkg")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=918143083]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+shape = SubResource("BoxShape3D_0xm2m")
+debug_color = Color(0.8333335, 0, 1, 1)
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1523364046]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.84, 0)
+
+[node name="Droid" parent="." unique_id=696408194 instance=ExtResource("1_4flbx")]
+
+[node name="Cabin" parent="Droid" index="0" unique_id=1941011358]
+surface_material_override/0 = SubResource("StandardMaterial3D_4flbx")
+
+[editable path="Droid"]
