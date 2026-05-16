@@ -1,5 +1,6 @@
 [gd_scene format=4 uid="uid://gyfurjc54xl1"]
 
+[ext_resource type="Script" uid="uid://bh3xxfigt5btp" path="res://main.gd" id="1_h2yge"]
 [ext_resource type="Texture2D" uid="uid://b0elvbweai7ni" path="res://img/checker_w.png" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://de3okia1plc2x" path="res://3d/droid.gltf" id="2_0xm2m"]
 
@@ -133,6 +134,7 @@ shadow_mesh = SubResource("ArrayMesh_8ujtc")
 albedo_color = Color(0, 0, 0.5, 1)
 
 [node name="Main" type="Node3D" unique_id=579512571]
+script = ExtResource("1_h2yge")
 
 [node name="Light" type="DirectionalLight3D" parent="." unique_id=240048722]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 100, 0)
