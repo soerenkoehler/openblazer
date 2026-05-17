@@ -14,7 +14,6 @@ func _ready() -> void:
     configure_remote_transform(playfield, "Player2", viewport_2)
 
 func configure_remote_transform(playfield: Node, player: String, viewport: SubViewport) -> void:
-
     var camera_position := playfield.get_node("%s/CameraPosition" % player)
     var destination_camera := viewport.get_node("Camera3D")
 
@@ -25,3 +24,9 @@ func configure_remote_transform(playfield: Node, player: String, viewport: SubVi
     remote_transform.update_scale = false
 
     camera_position.add_child(remote_transform)
+
+func _input(event: InputEvent) -> void:
+    if event.is_action_pressed("fullscreen"):
+        var fullscreen: bool = not Config.get_value(Config.FULLSCREEN)
+        super.get_window().mode = Window.MODE_FULLSCREEN if fullscreen else Window.MODE_WINDOWED
+        Config.set_value(Config.FULLSCREEN, fullscreen)
