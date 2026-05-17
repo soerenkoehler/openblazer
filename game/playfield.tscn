@@ -1,0 +1,92 @@
+[gd_scene format=3 uid="uid://gyfurjc54xl1"]
+
+[ext_resource type="Script" uid="uid://bh3xxfigt5btp" path="res://playfield.gd" id="1_h2yge"]
+[ext_resource type="Texture2D" uid="uid://b0elvbweai7ni" path="res://img/checker_w.png" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://bwt4rr25v4cft" path="res://player.tscn" id="3_h2yge"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ig7tw"]
+
+[sub_resource type="Sky" id="Sky_0xm2m"]
+sky_material = SubResource("ProceduralSkyMaterial_ig7tw")
+
+[sub_resource type="Environment" id="Environment_h2yge"]
+background_mode = 2
+sky = SubResource("Sky_0xm2m")
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_ig7tw"]
+dof_blur_far_transition = 0.0
+dof_blur_near_transition = 0.0
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_h2yge"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ig7tw"]
+size = Vector2(100, 100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h2yge"]
+render_priority = 1
+transparency = 4
+albedo_color = Color(0, 1, 0, 1)
+albedo_texture = ExtResource("1_ig7tw")
+uv1_scale = Vector3(5, 5, 5)
+texture_filter = 0
+distance_fade_min_distance = 150.0
+distance_fade_max_distance = 100.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0xm2m"]
+next_pass = SubResource("StandardMaterial3D_h2yge")
+albedo_color = Color(0.0625, 0.25, 0.0625, 1)
+texture_filter = 0
+distance_fade_min_distance = 150.0
+distance_fade_max_distance = 100.0
+stencil_flags = 2
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ig7tw"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_ig7tw"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lquwl"]
+depth_draw_mode = 1
+uv1_scale = Vector3(5, 5, 5)
+texture_filter = 0
+
+[node name="Playfield" type="Node3D" unique_id=579512571]
+script = ExtResource("1_h2yge")
+
+[node name="Light" type="DirectionalLight3D" parent="." unique_id=240048722]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 100, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=244596735]
+environment = SubResource("Environment_h2yge")
+camera_attributes = SubResource("CameraAttributesPractical_ig7tw")
+
+[node name="Ground" type="StaticBody3D" parent="." unique_id=369543606]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" unique_id=1317833846]
+shape = SubResource("WorldBoundaryShape3D_h2yge")
+debug_color = Color(0, 0.85000014, 1, 1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground" unique_id=205486371]
+mesh = SubResource("PlaneMesh_ig7tw")
+surface_material_override/0 = SubResource("StandardMaterial3D_0xm2m")
+
+[node name="Ball" type="RigidBody3D" parent="." unique_id=2095023442]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.84, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ball" unique_id=1260917984]
+shape = SubResource("SphereShape3D_ig7tw")
+debug_color = Color(0.8333335, 0, 1, 1)
+debug_fill = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ball" unique_id=308380919]
+mesh = SubResource("SphereMesh_ig7tw")
+surface_material_override/0 = SubResource("StandardMaterial3D_lquwl")
+
+[node name="Player1" parent="." unique_id=265701564 instance=ExtResource("3_h2yge")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, 25)
+cabin_color = Color(1, 0, 0, 1)
+base_color = Color(0.5, 0, 0, 1)
+
+[node name="Player2" parent="." unique_id=120681454 instance=ExtResource("3_h2yge")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -25, 0, -25)
+cabin_color = Color(0, 0, 1, 1)
+base_color = Color(0, 0, 0.5, 1)

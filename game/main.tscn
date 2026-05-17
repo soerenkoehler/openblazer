@@ -1,100 +1,37 @@
-[gd_scene format=3 uid="uid://gyfurjc54xl1"]
+[gd_scene format=3 uid="uid://b0e3qwko0tfsj"]
 
-[ext_resource type="Script" uid="uid://bh3xxfigt5btp" path="res://main.gd" id="1_h2yge"]
-[ext_resource type="Texture2D" uid="uid://b0elvbweai7ni" path="res://img/checker_w.png" id="1_ig7tw"]
-[ext_resource type="PackedScene" uid="uid://bwt4rr25v4cft" path="res://player.tscn" id="3_h2yge"]
+[ext_resource type="Script" uid="uid://dib38rk4mtnwd" path="res://main.gd" id="1_h2yge"]
+[ext_resource type="PackedScene" uid="uid://2hi7afuk3kwf" path="res://splitscreen.tscn" id="2_0xm2m"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ig7tw"]
-
-[sub_resource type="Sky" id="Sky_0xm2m"]
-sky_material = SubResource("ProceduralSkyMaterial_ig7tw")
-
-[sub_resource type="Environment" id="Environment_h2yge"]
-background_mode = 2
-sky = SubResource("Sky_0xm2m")
-
-[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_ig7tw"]
-dof_blur_far_transition = 0.0
-dof_blur_near_transition = 0.0
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_ig7tw"]
-size = Vector3(100, 1, 100)
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_ig7tw"]
-size = Vector2(100, 100)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h2yge"]
-render_priority = 1
-transparency = 4
-albedo_color = Color(0, 1, 0, 1)
-albedo_texture = ExtResource("1_ig7tw")
-uv1_scale = Vector3(5, 5, 5)
-texture_filter = 0
-distance_fade_min_distance = 150.0
-distance_fade_max_distance = 100.0
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0xm2m"]
-next_pass = SubResource("StandardMaterial3D_h2yge")
-albedo_color = Color(0.0625, 0.25, 0.0625, 1)
-texture_filter = 0
-distance_fade_min_distance = 150.0
-distance_fade_max_distance = 100.0
-stencil_flags = 2
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_ig7tw"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_ig7tw"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lquwl"]
-depth_draw_mode = 1
-uv1_scale = Vector3(5, 5, 5)
-texture_filter = 0
-
-[node name="Main" type="Node3D" unique_id=579512571]
+[node name="Main" type="Control" unique_id=189423835]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_h2yge")
 
-[node name="Debug Camera" type="Marker3D" parent="." unique_id=1614610998]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 30, 50)
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=894837035]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Camera3D" type="Camera3D" parent="Debug Camera" unique_id=1589901871]
-transform = Transform3D(0.70710677, -0.49999994, 0.49999997, 0, 0.7071067, 0.70710677, -0.70710677, -0.49999994, 0.49999997, 0, 0, 0)
+[node name="Player1" parent="VBoxContainer" unique_id=1685064962 instance=ExtResource("2_0xm2m")]
+layout_mode = 2
 
-[node name="Light" type="DirectionalLight3D" parent="." unique_id=240048722]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 100, 0)
+[node name="Scoreboard" type="SubViewportContainer" parent="VBoxContainer" unique_id=388261500]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+stretch = true
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=244596735]
-environment = SubResource("Environment_h2yge")
-camera_attributes = SubResource("CameraAttributesPractical_ig7tw")
+[node name="SubViewport" type="SubViewport" parent="VBoxContainer/Scoreboard" unique_id=2032226944]
+handle_input_locally = false
+size = Vector2i(1280, 64)
+render_target_update_mode = 4
 
-[node name="Ground" type="StaticBody3D" parent="." unique_id=369543606]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" unique_id=1317833846]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-shape = SubResource("BoxShape3D_ig7tw")
-debug_color = Color(0, 0.85000014, 1, 1)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground" unique_id=205486371]
-mesh = SubResource("PlaneMesh_ig7tw")
-surface_material_override/0 = SubResource("StandardMaterial3D_0xm2m")
-
-[node name="Ball" type="RigidBody3D" parent="." unique_id=2095023442]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.84, 0)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ball" unique_id=1260917984]
-shape = SubResource("SphereShape3D_ig7tw")
-debug_color = Color(0.8333335, 0, 1, 1)
-debug_fill = false
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Ball" unique_id=308380919]
-mesh = SubResource("SphereMesh_ig7tw")
-surface_material_override/0 = SubResource("StandardMaterial3D_lquwl")
-
-[node name="Player1" parent="." unique_id=265701564 instance=ExtResource("3_h2yge")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, 25)
-cabin_color = Color(0.86, 0, 0, 1)
-base_color = Color(0.5, 0, 0, 1)
-
-[node name="Player2" parent="." unique_id=1977034464 instance=ExtResource("3_h2yge")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -25, 0, -25)
-cabin_color = Color(0, 0, 1, 1)
-base_color = Color(0, 0, 0.5, 1)
+[node name="Player2" parent="VBoxContainer" unique_id=296026050 instance=ExtResource("2_0xm2m")]
+layout_mode = 2

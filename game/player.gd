@@ -22,8 +22,7 @@ extends RigidBody3D
         _update_properties()
 
 func _ready() -> void:
-    if Engine.is_editor_hint():
-        _update_properties()
+    _update_properties()
 
 func _update_properties() -> void:
     _update_albedo("Droid/Cabin", cabin_color, cabin_texture)
