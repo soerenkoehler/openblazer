@@ -1,6 +1,5 @@
 [gd_scene format=3 uid="uid://gyfurjc54xl1"]
 
-[ext_resource type="Script" uid="uid://bh3xxfigt5btp" path="res://playfield.gd" id="1_h2yge"]
 [ext_resource type="Texture2D" uid="uid://b0elvbweai7ni" path="res://img/checker_w.png" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://bwt4rr25v4cft" path="res://player.tscn" id="3_h2yge"]
 
@@ -50,7 +49,6 @@ uv1_scale = Vector3(5, 5, 5)
 texture_filter = 0
 
 [node name="Playfield" type="Node3D" unique_id=579512571]
-script = ExtResource("1_h2yge")
 
 [node name="Light" type="DirectionalLight3D" parent="." unique_id=240048722]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 100, 0)
