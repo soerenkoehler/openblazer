@@ -61,7 +61,7 @@ install_godot() {
         unzip "Godot_v${GODOT_VERSION}_${FILE}"
     done
 
-    TEMPLATE_DIR=~/.local/share/godot/export_templates/${GODOT_VERSION}/
+    TEMPLATE_DIR=~/.local/share/godot/export_templates/$(tr '-' '.' <<< "$GODOT_VERSION")/
     mkdir -p "$TEMPLATE_DIR"
     mv -v templates/* "$TEMPLATE_DIR"
 
