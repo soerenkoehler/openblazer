@@ -71,6 +71,7 @@ install_godot() {
 }
 
 package() {
+    ./godot --headless --path ./game --editor --quit
     ./godot --headless --path ./game --export-release "Windows Desktop" "../dist/$PROJECT.exe"
 }
 
