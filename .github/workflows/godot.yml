@@ -1,0 +1,25 @@
+name: Godot
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: package artifacts
+        run: ./deploy.sh package
+
+      - name: create release
+        run: ./deploy.sh release
+        env:
+          GH_TOKEN: ${{ github.token }}
