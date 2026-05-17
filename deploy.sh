@@ -67,7 +67,7 @@ install_godot() {
 
     mv -v "./Godot_v${GODOT_VERSION}_linux.x86_64" ./godot
     chmod 700 ./godot
-    "$GODOT" --version
+    ./godot --version
 }
 
 package() {
