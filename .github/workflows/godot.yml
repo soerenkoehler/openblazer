@@ -16,6 +16,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: install Godot
+        run: ./deploy.sh install
+
       - name: package artifacts
         run: ./deploy.sh package
 
