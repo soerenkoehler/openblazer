@@ -58,11 +58,16 @@ install_godot() {
             --location \
             --remote-name \
             "https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}_${FILE}"
+        unzip -v "Godot_v${GODOT_VERSION}_${FILE}"
     done
 
-    mv -v *.tpz ~/.local/share/godot/export_templates/${GODOT_VERSION}/
+    TEMPLATE_DIR=~/.local/share/godot/export_templates/${GODOT_VERSION}/
+    mkdir -p "$TEMPLATE_DIR"
+    mv -v templates/* "$TEMPLATE_DIR"
 
-    unzip -v "Godot_v${GODOT_VERSION}_${FILE}"
+    GODOT="./Godot_v${GODOT_VERSION}_linux.x86_64"
+    chmod 700 "$GODOT"
+    "$GODOT" --version
 }
 
 package() {
