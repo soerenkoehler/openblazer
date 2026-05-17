@@ -9,7 +9,7 @@ main() {
         | cut -d'=' -f2 \
         | tr -d '"'
     )
-    GODOT_VERSION=4.6.2
+    GODOT_VERSION=4.6.2-stable
 
     initialize_workspace
 
@@ -55,7 +55,6 @@ install_godot() {
     for FILE in linux.x86_64.zip export_templates.tpz
     do
         curl \
-            --verbose \
             --location \
             --remote-name \
             "https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}_${FILE}"
