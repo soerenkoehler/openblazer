@@ -71,7 +71,7 @@ install_godot() {
 }
 
 package() {
-    printf "TODO\n"
+    "$GODOT" --headless --export-release "Windows Desktop" "../dist/$PROJECT.exe"
 }
 
 release() {
