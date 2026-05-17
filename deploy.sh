@@ -55,6 +55,7 @@ install_godot() {
     for FILE in linux.x86_64.zip export_templates.tpz
     do
         curl \
+            --verbose \
             --location \
             --remote-name \
             "https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}_${FILE}"
