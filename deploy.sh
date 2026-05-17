@@ -65,13 +65,13 @@ install_godot() {
     mkdir -p "$TEMPLATE_DIR"
     mv -v templates/* "$TEMPLATE_DIR"
 
-    GODOT="./Godot_v${GODOT_VERSION}_linux.x86_64"
-    chmod 700 "$GODOT"
+    mv -v "./Godot_v${GODOT_VERSION}_linux.x86_64" ./godot
+    chmod 700 ./godot
     "$GODOT" --version
 }
 
 package() {
-    "$GODOT" --headless --export-release "Windows Desktop" "../dist/$PROJECT.exe"
+    ./godot --headless --export-release "Windows Desktop" "../dist/$PROJECT.exe"
 }
 
 release() {
