@@ -28,7 +28,7 @@ transparency = 4
 albedo_color = Color(0, 1, 0, 1)
 albedo_texture = ExtResource("1_ig7tw")
 uv1_scale = Vector3(5, 5, 5)
-texture_filter = 0
+texture_filter = 5
 distance_fade_min_distance = 150.0
 distance_fade_max_distance = 100.0
 
