@@ -8,3 +8,7 @@ func _process(delta: float) -> void:
     if update_timer >= update_interval:
         text = "FPS: %.1f" % Engine.get_frames_per_second()
         update_timer = 0.0
+
+func _input(event: InputEvent) -> void:
+    if event.is_action_pressed("fpscounter", false, true):
+        visible = not visible
