@@ -10,7 +10,7 @@ const GRAPHICS_QUALITY := "graphics.quality"
 
 func _ready():
     if _config.load(CONFIG_FILE) != OK:
-        self.set_value(FULLSCREEN, true)
+        set_value(FULLSCREEN, true)
 
 func _notification(what):
     if what == NOTIFICATION_PREDELETE:
