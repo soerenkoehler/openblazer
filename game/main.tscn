@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://b0e3qwko0tfsj"]
 
-[ext_resource type="Script" uid="uid://dib38rk4mtnwd" path="res://main.gd" id="1_h2yge"]
+[ext_resource type="Script" uid="uid://dib38rk4mtnwd" path="res://script/main.gd" id="1_h2yge"]
 [ext_resource type="PackedScene" uid="uid://2hi7afuk3kwf" path="res://splitscreen.tscn" id="2_0xm2m"]
-[ext_resource type="Script" uid="uid://b1l15gqigrk2q" path="res://fpscounter.gd" id="3_h2yge"]
+[ext_resource type="Script" uid="uid://b1l15gqigrk2q" path="res://script/fpscounter.gd" id="3_h2yge"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_1bvp3"]
 line_spacing = 0.0

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bwt4rr25v4cft"]
 
 [ext_resource type="PackedScene" uid="uid://de3okia1plc2x" path="res://3d/droid.gltf" id="1_4flbx"]
-[ext_resource type="Script" uid="uid://r4qq53kjp5uq" path="res://player.gd" id="1_onrkg"]
+[ext_resource type="Script" uid="uid://r4qq53kjp5uq" path="res://script/player.gd" id="1_onrkg"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0xm2m"]
 size = Vector3(3, 2.5, 3)
