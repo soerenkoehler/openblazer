@@ -7,7 +7,7 @@
 
     <Identity
         Name="soerenkoehler.Blasterblazer"
-        Version="0.0.0.1"
+        Version="0.0.0.0"
         Publisher="CN=2D1A4AEB-F3CB-4AB2-AB06-ABCC953D32A5"
         ProcessorArchitecture="x64" />
 
@@ -15,8 +15,12 @@
         <PublisherDisplayName>soerenkoehler</PublisherDisplayName>
         <DisplayName>Blasterblazer</DisplayName>
         <Description>Windows Store PoC (Properties)</Description>
-        <Logo>Square150x150Logo.scale-400.png</Logo>
+        <Logo>assets\Square150x150Logo.scale-400.png</Logo>
     </Properties>
+
+    <Resources>
+        <Resource Language="en-us" />
+    </Resources>
 
     <Dependencies>
         <TargetDeviceFamily
