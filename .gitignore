@@ -1,5 +1,6 @@
 .godot/
 release/
+*.msix
 *.exe
 *.pck
 *.blend1

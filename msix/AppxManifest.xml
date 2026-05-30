@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package
+    xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+    xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+    xmlns:uap10="http://schemas.microsoft.com/appx/manifest/uap/windows10/10"
+    xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities">
+
+    <Identity
+        Name="soerenkoehler.Blasterblazer"
+        Version="0.0.0.1"
+        Publisher="CN=2D1A4AEB-F3CB-4AB2-AB06-ABCC953D32A5"
+        ProcessorArchitecture="x64" />
+
+    <Properties>
+        <PublisherDisplayName>soerenkoehler</PublisherDisplayName>
+        <DisplayName>Blasterblazer (Properties)</DisplayName>
+        <Description>Windows Store PoC (Properties)</Description>
+        <Logo>x.png</Logo>
+    </Properties>
+
+    <Dependencies>
+        <TargetDeviceFamily
+            Name="Windows.Desktop"
+            MinVersion="10.0.19041.0"
+            MaxVersionTested="10.0.26200.0" />
+    </Dependencies>
+
+    <Capabilities>
+        <rescap:Capability Name="runFullTrust"/>
+    </Capabilities>
+
+    <Applications>
+        <Application
+            Id="soerenkoehler.Blasterblazer"
+            Executable="openblazer.exe"
+            uap10:RuntimeBehavior="packagedClassicApp"
+            uap10:TrustLevel="mediumIL">
+            <uap:VisualElements
+                DisplayName="Blasterblazer (uap:VisualElements)"
+                Description="Windows Store PoC (uap:VisualElements)"
+                Square150x150Logo=""
+                Square44x44Logo=""
+                BackgroundColor="" />
+        </Application>
+    </Applications>
+</Package>
