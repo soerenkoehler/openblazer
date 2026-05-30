@@ -13,6 +13,7 @@ config_version=5
 config/name="openblazer"
 run/main_scene="uid://b0e3qwko0tfsj"
 config/features=PackedStringArray("4.6", "Mobile")
+config/icon="uid://dv0f4ny74moip"
 
 [autoload]
 
@@ -22,7 +23,6 @@ Config="*uid://bhxgqmjtphaey"
 
 window/size/viewport_width=1280
 window/size/viewport_height=768
-window/size/mode=3
 window/size/mode.editor=0
 
 [input]

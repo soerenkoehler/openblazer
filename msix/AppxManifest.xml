@@ -13,9 +13,9 @@
 
     <Properties>
         <PublisherDisplayName>soerenkoehler</PublisherDisplayName>
-        <DisplayName>Blasterblazer (Properties)</DisplayName>
+        <DisplayName>Blasterblazer</DisplayName>
         <Description>Windows Store PoC (Properties)</Description>
-        <Logo>x.png</Logo>
+        <Logo>Square150x150Logo.scale-400.png</Logo>
     </Properties>
 
     <Dependencies>
@@ -36,7 +36,7 @@
             uap10:RuntimeBehavior="packagedClassicApp"
             uap10:TrustLevel="mediumIL">
             <uap:VisualElements
-                DisplayName="Blasterblazer (uap:VisualElements)"
+                DisplayName="Blasterblazer"
                 Description="Windows Store PoC (uap:VisualElements)"
                 Square150x150Logo="assets\Square150x150Logo.png"
                 Square44x44Logo="assets\Square44x44Logo.png"
