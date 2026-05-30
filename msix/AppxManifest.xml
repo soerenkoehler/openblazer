@@ -38,9 +38,9 @@
             <uap:VisualElements
                 DisplayName="Blasterblazer (uap:VisualElements)"
                 Description="Windows Store PoC (uap:VisualElements)"
-                Square150x150Logo=""
-                Square44x44Logo=""
-                BackgroundColor="" />
+                Square150x150Logo="assets\Square150x150Logo.png"
+                Square44x44Logo="assets\Square44x44Logo.png"
+                BackgroundColor="transparent" />
         </Application>
     </Applications>
 </Package>
