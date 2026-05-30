@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bwt4rr25v4cft" path="res://player.tscn" id="3_h2yge"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ig7tw"]
+ground_bottom_color = Color(0.5, 0.38333333, 0.15, 1)
 
 [sub_resource type="Sky" id="Sky_0xm2m"]
 sky_material = SubResource("ProceduralSkyMaterial_ig7tw")
@@ -60,8 +61,8 @@ camera_attributes = SubResource("CameraAttributesPractical_ig7tw")
 [node name="Ground" type="StaticBody3D" parent="." unique_id=369543606]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" unique_id=1317833846]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
 shape = SubResource("WorldBoundaryShape3D_h2yge")
-debug_color = Color(0, 0.85000014, 1, 1)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ground" unique_id=205486371]
 mesh = SubResource("PlaneMesh_ig7tw")
@@ -72,8 +73,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.84, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ball" unique_id=1260917984]
 shape = SubResource("SphereShape3D_ig7tw")
-debug_color = Color(0.8333335, 0, 1, 1)
-debug_fill = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ball" unique_id=308380919]
 mesh = SubResource("SphereMesh_ig7tw")
