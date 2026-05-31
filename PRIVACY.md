@@ -1,8 +1,9 @@
 # Privacy Policy
 
-This Privacy Policy governs the software application known as **[TODO Insert Game
-Name Here]**, hereinafter referred to as **"the game."** This document outlines
-the data handling practices associated with the utilization of the software.
+This Privacy Policy governs the software application known as **openblazer** (or
+**Blasterblazer** in the MS Store), hereinafter referred to as **"the game."**
+This document outlines the data handling practices associated with the
+utilization of the software.
 
 ----
 
@@ -21,12 +22,11 @@ user's device.
 
 ### 2. Third-Party Software Components
 
-The game is synthesized (**TODO**) utilizing the **Godot Engine**.
+The game is created around the **Godot Engine**.
 
-*   To the framework's established technical parameters, the Godot Engine does
-    not transmit data externally ("phone home") during runtime. Detailed
-    information regarding the framework's data processing can be reviewed via
-    the [Godot Engine Privacy Policy](https://godotengine.org/privacy-policy/).
+*   The Godot Engine does not transmit data externally ("phone home") during
+    runtime. Detailed information regarding the framework's data processing can
+    be reviewed via the [Godot Engine Privacy Policy][godot-privacy].
 
 *   No additional third-party libraries, software development kits (SDKs), or
     advertising frameworks are integrated into the game architecture.
@@ -53,5 +53,6 @@ platforms.
 
 ----
 
-[gh-privacy]: https://docs.github.com/site-policy/privacy-policies/github-privacy-statement
-[ms-privacy]: https://www.microsoft.com/en-us/privacy/privacystatement
+[gh-privacy]:    https://docs.github.com/site-policy/privacy-policies/github-privacy-statement
+[ms-privacy]:    https://www.microsoft.com/en-us/privacy/privacystatement
+[godot-privacy]: https://godotengine.org/privacy-policy/
