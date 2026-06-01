@@ -16,14 +16,14 @@ jobs:
         with:
           fetch-depth: 0
 
-      # - name: install Godot
-      #   run: ./deploy.sh install
+      - name: install Godot
+        run: ./deploy.sh install
 
       - name: install Microsoft Store CLI
         uses: microsoft/microsoft-store-apppublisher@v1.3
 
-      # - name: package artifacts
-      #   run: ./deploy.sh package
+      - name: package artifacts
+        run: ./deploy.sh package
 
       - name: create release
         run: ./deploy.sh release

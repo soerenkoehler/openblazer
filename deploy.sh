@@ -95,7 +95,7 @@ release() {
 
     if [[ -e $DIR_DIST ]]; then
         upload_artifacts
-        # if [[ $RELEASE != nightly ]]; then
+        # TODO if [[ $RELEASE != nightly ]]; then
             publish_to_msstore
         # fi
    else
