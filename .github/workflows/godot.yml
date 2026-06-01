@@ -16,7 +16,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: install Godot
+      - name: install Tools
         run: ./deploy/deploy.sh install
 
       - name: install Microsoft Store CLI

@@ -99,7 +99,7 @@ package() {
 
     xsltproc \
         --stringparam new-version "$VERSION" \
-        update-appmanifest.xslt \
+        "$DIR_THIS_SCRIPT/update-appmanifest.xslt" \
         AppxManifest.xml > AppxManifest.updated.xml
     docker run \
         --rm \
@@ -111,7 +111,7 @@ package() {
 
     # create SHA256 hashes
 
-    pushd "$DIST_DIR"
+    pushd "$DIR_DIST"
 
     rm *.sha256
     for FILE in *
@@ -196,7 +196,10 @@ fetch_tags() {
 upload_artifacts() {
     printf "uploading artifacts to GitHub release '%s'\n" "$RELEASE"
 
-    gh release upload --clobber "$RELEASE" "$DIR_DIST/*"
+    for FILE in $(find "$DIR_DIST" -type f -not -name ".*")
+    do
+        gh release upload --clobber "$RELEASE" "$FILE"
+    done
 }
 
 publish_to_msstore() {
