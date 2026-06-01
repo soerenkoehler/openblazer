@@ -20,7 +20,7 @@ jobs:
       #   run: ./deploy.sh install
 
       - name: setup Microsoft Store CLI
-        uses: microsoft/microsoft-store-apppublisher@v1.2
+        uses: microsoft/microsoft-store-apppublisher@v1.3
 
       # - name: package artifacts
       #   run: ./deploy.sh package
