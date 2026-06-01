@@ -5,6 +5,7 @@ main() {
     DIR_THIS_SCRIPT=$(dirname "$THIS_SCRIPT")
     DIR_GAME=$(readlink -e "./game")
     DIR_DIST=$(readlink -e "./dist")
+    DIR_MSIX=$(readlink -e "./msix")
 
     PROJECT=$(
         grep -E '^config/name=".+"' "$DIR_GAME/project.godot" \
@@ -95,19 +96,21 @@ package() {
 
     # create MSIX package
 
-    cp "$DIR_DIST/$PROJECT.exe" "./msix/"
+    cp "$DIR_DIST/$PROJECT.exe" "$DIR_MSIX"
 
     xsltproc \
         --stringparam new-version "$VERSION" \
         "$DIR_THIS_SCRIPT/update-appmanifest.xslt" \
-        AppxManifest.xml > AppxManifest.updated.xml
+        "$DIR_MSIX/AppxManifest.xml" > "$DIR_MSIX/AppxManifest.updated.xml"
+    mv "$DIR_MSIX/AppxManifest.updated.xml" "$DIR_MSIX/AppxManifest.xml"
+
     docker run \
         --rm \
         -v "$PWD":"/workspace" \
         ghcr.io/soerenkoehler-org/docker-msix:main \
         pack \
         -d "./msix" \
-        -p "./dist/$PROJECT.msix"
+        -p "./$PROJECT.msix"
 
     # create SHA256 hashes
 
