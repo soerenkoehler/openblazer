@@ -2,5 +2,7 @@
 release/
 *.msix
 *.exe
+*.x64
 *.pck
 *.blend1
+*.sha256
