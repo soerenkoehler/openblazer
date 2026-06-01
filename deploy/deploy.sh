@@ -18,6 +18,7 @@ main() {
     case $1 in
 
     install)
+        install_system_dependencies
         install_godot
     ;;
 
@@ -58,6 +59,15 @@ initialize_workspace() {
     fi
 }
 
+install_system_dependencies() {
+    sudo apt-get update
+    sudo apt-get install -y \
+        dbus-x11 \
+        gnome-keyring \
+        libsecret-1-0 \
+        xsltproc
+}
+
 install_godot() {
     for FILE in linux.x86_64.zip export_templates.tpz
     do
@@ -87,6 +97,10 @@ package() {
 
     cp "$DIR_DIST/$PROJECT.exe" "./msix/"
 
+    xsltproc \
+        --stringparam new-version "$VERSION" \
+        update-appmanifest.xslt \
+        AppxManifest.xml > AppxManifest.updated.xml
     docker run \
         --rm \
         -v "$PWD":"/workspace" \
@@ -94,10 +108,6 @@ package() {
         pack \
         -d "./msix" \
         -p "./dist/$PROJECT.msix"
-    xsltproc \
-        --stringparam new-version "$VERSION" \
-        update-appmanifest.xslt \
-        AppxManifest.xml > AppxManifest.updated.xml
 
     # create SHA256 hashes
 
@@ -190,12 +200,6 @@ upload_artifacts() {
 }
 
 publish_to_msstore() {
-    sudo apt-get update
-    sudo apt-get install -y \
-        libsecret-1-0 \
-        gnome-keyring \
-        dbus-x11
-
     eval $(
         dbus-launch --sh-syntax
     )
