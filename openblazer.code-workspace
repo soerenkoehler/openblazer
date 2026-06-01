@@ -11,6 +11,8 @@
             "**/*.uid": true,
             "**/*.import": true,
             "**/*.blend1": true
-        }
+        },
+        "telemetry.editStats.enabled": false,
+        "telemetry.feedback.enabled": false,
     }
 }
