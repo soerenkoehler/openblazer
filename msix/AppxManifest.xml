@@ -7,7 +7,7 @@
 
     <Identity
         Name="soerenkoehler.Blasterblazer"
-        Version="0.0.0.0"
+        Version="0.0.0.1"
         Publisher="CN=2D1A4AEB-F3CB-4AB2-AB06-ABCC953D32A5"
         ProcessorArchitecture="x64" />
 
