@@ -57,6 +57,7 @@ initialize_workspace() {
         fi
     elif [[ $GITHUB_REF_TYPE == 'branch' ]]; then
         RELEASE=nightly
+        VERSION=1.2.3.4 # TODO DEBUG
     fi
 }
 
@@ -89,40 +90,8 @@ install_godot() {
 }
 
 package() {
-    # export Godot projects
-
     ./godot --headless --path "$DIR_GAME" --export-release "Windows Desktop" "$DIR_DIST/$PROJECT.exe"
     ./godot --headless --path "$DIR_GAME" --export-release "Linux"           "$DIR_DIST/$PROJECT.x64"
-
-    # create MSIX package
-
-    cp "$DIR_DIST/$PROJECT.exe" "$DIR_MSIX"
-
-    xsltproc \
-        --stringparam new-version "$VERSION" \
-        "$DIR_THIS_SCRIPT/update-appmanifest.xslt" \
-        "$DIR_MSIX/AppxManifest.xml" > "$DIR_MSIX/AppxManifest.updated.xml"
-    mv "$DIR_MSIX/AppxManifest.updated.xml" "$DIR_MSIX/AppxManifest.xml"
-
-    docker run \
-        --rm \
-        -v "$PWD":"/workspace" \
-        ghcr.io/soerenkoehler-org/docker-msix:main \
-        pack \
-        -d "./msix" \
-        -p "./$PROJECT.msix"
-
-    # create SHA256 hashes
-
-    pushd "$DIR_DIST"
-
-    rm *.sha256
-    for FILE in *
-    do
-        sha256sum "$FILE" >$FILE.sha256
-    done
-
-    popd
 }
 
 release() {
@@ -139,7 +108,7 @@ release() {
 
     # second (long duration): publish to MS Store
     # FIXME if [[ $RELEASE != nightly ]]; then
-        # publish_to_msstore
+        publish_to_msstore
     # fi
 }
 
@@ -197,37 +166,67 @@ fetch_tags() {
 }
 
 upload_artifacts() {
+    pushd "$DIR_DIST"
+
+    rm *.sha256
+    for FILE in *
+    do
+        sha256sum "$FILE" >$FILE.sha256
+    done
+
     printf "uploading artifacts to GitHub release '%s'\n" "$RELEASE"
 
-    for FILE in $(find "$DIR_DIST" -type f -not -name ".*")
+    for FILE in $(find . -type f -not -name ".*")
     do
         gh release upload --clobber "$RELEASE" "$FILE"
     done
+
+    popd
 }
 
 publish_to_msstore() {
-    eval $(
-        dbus-launch --sh-syntax
-    )
-    printf "pipeline_fallback_password" \
-    | gnome-keyring-daemon --unlock
-    eval $(
-        printf "pipeline_fallback_password" \
-        | gnome-keyring-daemon --start --components=secrets
-    )
+    printf "### create MSIX package\n"
 
-    msstore reconfigure \
-        --tenantId     "$MSSTORE_TENANT_ID" \
-        --sellerId     "$MSSTORE_SELLER_ID" \
-        --clientId     "$MSSTORE_CLIENT_ID" \
-        --clientSecret "$MSSTORE_CLIENT_SECRET"
+    cp "$DIR_DIST/$PROJECT.exe" "$DIR_MSIX"
 
-    printf "uploading artifacts to MS Store\n"
+    xsltproc \
+        --stringparam new-version "$VERSION" \
+        "$DIR_THIS_SCRIPT/update-appmanifest.xslt" \
+        "$DIR_MSIX/AppxManifest.xml" > "$DIR_MSIX/AppxManifest.updated.xml"
+    mv "$DIR_MSIX/AppxManifest.updated.xml" "$DIR_MSIX/AppxManifest.xml"
 
-    msstore publish \
-        "./$PROJECT.msix" \
-        --verbose \
-        --appId "$MSSTORE_STORE_ID"
+    docker run \
+        --rm \
+        -v "$PWD":"/workspace" \
+        ghcr.io/soerenkoehler-org/docker-msix:main \
+        pack \
+        -d "./msix" \
+        -p "./$PROJECT.msix"
+
+    # printf "### login to MS Store\n"
+
+    # eval $(
+    #     dbus-launch --sh-syntax
+    # )
+    # printf "pipeline_fallback_password" \
+    # | gnome-keyring-daemon --unlock
+    # eval $(
+    #     printf "pipeline_fallback_password" \
+    #     | gnome-keyring-daemon --start --components=secrets
+    # )
+
+    # msstore reconfigure \
+    #     --tenantId     "$MSSTORE_TENANT_ID" \
+    #     --sellerId     "$MSSTORE_SELLER_ID" \
+    #     --clientId     "$MSSTORE_CLIENT_ID" \
+    #     --clientSecret "$MSSTORE_CLIENT_SECRET"
+
+    # printf "### uploading artifacts to MS Store\n"
+
+    # msstore publish \
+    #     "./$PROJECT.msix" \
+    #     --verbose \
+    #     --appId "$MSSTORE_STORE_ID"
 }
 
 main "$@"
