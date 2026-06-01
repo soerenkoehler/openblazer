@@ -104,12 +104,13 @@ release() {
         create_release_prod
     fi
 
-    upload_artifacts
-
     # second (long duration): publish to MS Store
     # FIXME if [[ $RELEASE != nightly ]]; then
         publish_to_msstore
+        cp "./$PROJECT.msix" "$DIR_DIST"
     # fi
+
+    upload_artifacts
 }
 
 create_release_prod() {
