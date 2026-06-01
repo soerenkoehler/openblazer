@@ -43,7 +43,7 @@ initialize_workspace() {
     fi
 
     # prepare output directories
-    DIR_DIST=./dist
+    DIR_DIST=$(readlink -f ./dist)
 
     for DIR in $DIR_DIST; do
         mkdir -v -p $DIR
@@ -71,7 +71,17 @@ install_godot() {
 }
 
 package() {
-    ./godot --headless --path ./game --export-release "Windows Desktop" "../dist/$PROJECT.exe"
+    ./godot --headless --path ./game --export-release "Windows Desktop" "$DIR_DIST/$PROJECT.exe"
+
+    cp "$DIR_DIST/$PROJECT.exe" "./msix/"
+
+    docker run \
+        --rm \
+        -v "$PWD":"/workspace" \
+        ghcr.io/soerenkoehler-org/docker-msix:main \
+        pack \
+        -d "./msix" \
+        -p "./dist/$PROJECT.msix"
 }
 
 release() {
@@ -151,6 +161,10 @@ upload_artifacts() {
     printf "uploading artifacts to '%s'\n" "$RELEASE"
 
     gh release upload --clobber "$RELEASE" "$DIR_DIST/*"
+
+    # if [[ $RELEASE != nightly ]]; then
+        msstore publish . --inputFile "$DIR_DIST/openblazer.msix"
+    # fi
 }
 
 main "$@"
