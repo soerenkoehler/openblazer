@@ -25,7 +25,7 @@ jobs:
       - name: setup keyring
         run: |
           sudo apt-get update
-          sudo apt-get install -y libsecret-1-0 # gnome-keyring dbus dbus-x11
+          sudo apt-get install -y libsecret-1-0 gnome-keyring # dbus dbus-x11
           eval $(dbus-launch --sh-syntax)
           echo "pipeline_fallback_password" | gnome-keyring-daemon --unlock
           eval $(echo "pipeline_fallback_password" | gnome-keyring-daemon --start --components=secrets)
