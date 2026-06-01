@@ -191,7 +191,9 @@ publish_to_msstore() {
 
     printf "uploading artifacts to MS Store\n"
 
-    msstore publish "$DIR_DIST/openblazer.msix"
+    msstore publish \
+        --id "$MSSTORE_STORE_ID" \
+        "$DIR_DIST/openblazer.msix"
 }
 
 main "$@"
