@@ -163,6 +163,8 @@ upload_artifacts() {
     gh release upload --clobber "$RELEASE" "$DIR_DIST/*"
 
     # if [[ $RELEASE != nightly ]]; then
+        printf "%s\n" $MSSTORE_TENANT_ID $MSSTORE_SELLER_ID $MSSTORE_CLIENT_ID $MSSTORE_CLIENT_SECRET
+
         msstore publish . --inputFile "$DIR_DIST/openblazer.msix"
     # fi
 }
