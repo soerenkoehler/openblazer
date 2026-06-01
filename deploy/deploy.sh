@@ -117,9 +117,9 @@ release() {
 
     # first (quick win): create and upload GitHub release
     if [[ $RELEASE == nightly ]]; then
-        create_release_prod
-    else
         create_release_nightly
+    else
+        create_release_prod
     fi
 
     upload_artifacts
@@ -131,8 +131,6 @@ release() {
 }
 
 create_release_prod() {
-    RELEASE=$GITHUB_REF_NAME
-
     local EXISTING=$(
         gh release list \
             --json tagName \
@@ -152,8 +150,6 @@ create_release_prod() {
 }
 
 create_release_nightly() {
-    RELEASE=nightly
-
     printf "create/replace release 'nightly' on branch %s\n" "$GITHUB_REF_NAME"
 
     fetch_tags
