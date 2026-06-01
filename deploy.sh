@@ -95,7 +95,10 @@ release() {
 
     if [[ -e $DIR_DIST ]]; then
         upload_artifacts
-    else
+        # if [[ $RELEASE != nightly ]]; then
+            publish_to_msstore
+        # fi
+   else
         printf "no artifacts to upload\n"
     fi
 }
@@ -158,13 +161,37 @@ fetch_tags() {
 }
 
 upload_artifacts() {
-    printf "uploading artifacts to '%s'\n" "$RELEASE"
+    printf "uploading artifacts to GitHub release '%s'\n" "$RELEASE"
 
     gh release upload --clobber "$RELEASE" "$DIR_DIST/*"
+}
 
-    # if [[ $RELEASE != nightly ]]; then
-        msstore publish . --inputFile "$DIR_DIST/openblazer.msix"
-    # fi
+publish_to_msstore() {
+    sudo apt-get update
+    sudo apt-get install -y \
+        libsecret-1-0 \
+        gnome-keyring \
+        dbus-x11
+
+    eval $(
+        dbus-launch --sh-syntax
+    )
+    printf "pipeline_fallback_password" \
+    | gnome-keyring-daemon --unlock
+    eval $(
+        printf "pipeline_fallback_password" \
+        | gnome-keyring-daemon --start --components=secrets
+    )
+
+    msstore reconfigure \
+        --tenantId     "$MSSTORE_TENANT_ID" \
+        --sellerId     "$MSSTORE_SELLER_ID" \
+        --clientId     "$MSSTORE_CLIENT_ID" \
+        --clientSecret "$MSSTORE_CLIENT_SECRET"
+
+    printf "uploading artifacts to MS Store\n"
+
+    msstore publish . --inputFile "$DIR_DIST/openblazer.msix"
 }
 
 main "$@"
