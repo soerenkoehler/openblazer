@@ -232,7 +232,7 @@ publish_to_msstore() {
     )
 
     msstore submission updateMetadata "$MSSTORE_STORE_ID" "$(
-        jq -cr \
+        jq -crn \
             --arg whatsNew $RELEASE_NOTES \
             '{
                 listings: [{
