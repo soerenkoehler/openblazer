@@ -57,7 +57,7 @@ initialize_workspace() {
         fi
     elif [[ $GITHUB_REF_TYPE == 'branch' ]]; then
         RELEASE=nightly
-        VERSION=1.2.3.4 # DEBUG
+        VERSION=0.0.2.0 # DEBUG
     fi
 }
 
@@ -144,7 +144,7 @@ create_release_nightly() {
         2>/dev/null || true
 
     # Workaround for https://github.com/cli/cli/issues/8458
-    printf "waiting for tag to be deleted\n"
+    printf "wait for tag to be deleted\n"
     while fetch_tags; git tag -l | grep "$RELEASE"; do
         sleep 10;
         printf "still waiting...\n"
@@ -175,7 +175,7 @@ upload_artifacts() {
         sha256sum "$FILE" >$FILE.sha256
     done
 
-    printf "uploading artifacts to GitHub release '%s'\n" "$RELEASE"
+    printf "upload artifacts to GitHub release '%s'\n" "$RELEASE"
 
     for FILE in $(find . -type f -not -name ".*")
     do
@@ -204,25 +204,45 @@ publish_to_msstore() {
         -d "./msix" \
         -p "./$PROJECT.msix"
 
-    # printf "### login to MS Store\n"
+    printf "### login to MS Store\n"
 
-    # eval $(
-    #     dbus-launch --sh-syntax
-    # )
-    # printf "pipeline_fallback_password" \
-    # | gnome-keyring-daemon --unlock
-    # eval $(
-    #     printf "pipeline_fallback_password" \
-    #     | gnome-keyring-daemon --start --components=secrets
-    # )
+    eval $(
+        dbus-launch --sh-syntax
+    )
+    printf "pipeline_fallback_password" \
+    | gnome-keyring-daemon --unlock
+    eval $(
+        printf "pipeline_fallback_password" \
+        | gnome-keyring-daemon --start --components=secrets
+    )
 
-    # msstore reconfigure \
-    #     --tenantId     "$MSSTORE_TENANT_ID" \
-    #     --sellerId     "$MSSTORE_SELLER_ID" \
-    #     --clientId     "$MSSTORE_CLIENT_ID" \
-    #     --clientSecret "$MSSTORE_CLIENT_SECRET"
+    msstore reconfigure \
+        --tenantId     "$MSSTORE_TENANT_ID" \
+        --sellerId     "$MSSTORE_SELLER_ID" \
+        --clientId     "$MSSTORE_CLIENT_ID" \
+        --clientSecret "$MSSTORE_CLIENT_SECRET"
 
-    # printf "### uploading artifacts to MS Store\n"
+    printf "### set whats new section\n"
+
+    # Define submission parameters
+    RELEASE_NOTES=$(printf "%s\n" \
+        "v$VERSION:" \
+        "Zeile 1" \
+        "Zeile 2"
+    )
+
+    msstore submission updateMetadata "$MSSTORE_STORE_ID" "$(
+        jq -cr \
+            --arg whatsNew $RELEASE_NOTES \
+            '{
+                listings: [{
+                    language: "en-us",
+                    whatsNew: $whatsNew
+                }]
+            }'
+    )"
+
+    # printf "### upload artifacts to MS Store\n"
 
     # msstore publish \
     #     "./$PROJECT.msix" \
