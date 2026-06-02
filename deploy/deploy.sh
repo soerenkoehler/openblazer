@@ -231,7 +231,7 @@ publish_to_msstore() {
         "Zeile 2"
     )
 
-    msstore submission updateMetadata "$MSSTORE_STORE_ID" "$(
+    msstore submission updateMetadata -v "$MSSTORE_STORE_ID" "$(
         jq -crn \
             --arg whatsNew "$RELEASE_NOTES" \
             '{
