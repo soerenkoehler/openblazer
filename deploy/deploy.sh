@@ -235,7 +235,7 @@ publish_to_msstore() {
         jq -crn \
             --arg whatsNew "$RELEASE_NOTES" \
             '{
-                listings: {
+                Listings: {
                     "en-us": {
                         whatsNew: $whatsNew
                     }
