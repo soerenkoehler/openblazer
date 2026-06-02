@@ -231,17 +231,16 @@ publish_to_msstore() {
         "Zeile 2"
     )
 
-    msstore submission updateMetadata -v "$MSSTORE_STORE_ID" "$(
-        jq -crn \
-            --arg whatsNew "$RELEASE_NOTES" \
-            '{
-                Listings: {
-                    "en-us": {
-                        whatsNew: $whatsNew
-                    }
-                }
-            }'
-    )"
+    JSON_OLD=$(
+        msstore submission get "$MSSTORE_STORE_ID"
+    )
+    JSON_NEW=$(
+        jq -cr <<<"$JSON_OLD" \
+            --arg notes "$RELEASE_NOTES" \
+            '.Listings["en-us"].BaseListing.ReleaseNotes = $notes'
+    )
+    printf "~~~\n%s\n~~~\n" "$JSON_OLD" "$JSON_NEW"
+    msstore submission updateMetadata -v "$MSSTORE_STORE_ID" "$JSON_NEW"
 
     # printf "### upload artifacts to MS Store\n"
 
