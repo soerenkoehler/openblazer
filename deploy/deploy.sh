@@ -233,7 +233,7 @@ publish_to_msstore() {
 
     msstore submission updateMetadata "$MSSTORE_STORE_ID" "$(
         jq -crn \
-            --arg whatsNew $RELEASE_NOTES \
+            --arg whatsNew "$RELEASE_NOTES" \
             '{
                 listings: [{
                     language: "en-us",
