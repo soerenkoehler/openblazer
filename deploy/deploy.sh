@@ -236,8 +236,9 @@ publish_to_msstore() {
             --arg whatsNew "$RELEASE_NOTES" \
             '{
                 listings: {
-                    language: "en-us",
-                    whatsNew: $whatsNew
+                    "en-us": {
+                        whatsNew: $whatsNew
+                    }
                 }
             }'
     )"
