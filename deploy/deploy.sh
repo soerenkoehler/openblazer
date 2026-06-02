@@ -57,7 +57,7 @@ initialize_workspace() {
         fi
     elif [[ $GITHUB_REF_TYPE == 'branch' ]]; then
         RELEASE=nightly
-        VERSION=1.2.3.4 # TODO DEBUG
+        VERSION=1.2.3.4 # DEBUG
     fi
 }
 
@@ -105,12 +105,12 @@ release() {
     fi
 
     # second (long duration): publish to MS Store
-    # FIXME if [[ $RELEASE != nightly ]]; then
+    # DEBUG if [[ $RELEASE != nightly ]]; then
         publish_to_msstore
         cp "./$PROJECT.msix" "$DIR_DIST"
     # fi
 
-    upload_artifacts
+    upload_artifacts # DEBUG move back up
 }
 
 create_release_prod() {
