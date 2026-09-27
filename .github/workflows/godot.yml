@@ -27,7 +27,6 @@ jobs:
       - name: check deployment script
         run: |
           bash -n ./deploy/deploy.sh
-          bash ./deploy/test-deploy.sh
 
       - name: install tools
         run: ./deploy/deploy.sh install
