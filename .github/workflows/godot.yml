@@ -5,10 +5,18 @@ on:
     branches:
       - main
       - dev
+    tags:
+      - 'v*'
+
+concurrency:
+  group: godot-${{ github.ref == 'refs/heads/main' && 'nightly' || github.ref }}
+  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
       - name: checkout
@@ -16,16 +24,64 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: install Tools
-        run: ./deploy/deploy.sh install
+      - name: check deployment script
+        run: |
+          bash -n ./deploy/deploy.sh
 
-      - name: install Microsoft Store CLI
-        uses: microsoft/microsoft-store-apppublisher@v1.3
+      - name: install tools
+        run: ./deploy/deploy.sh install
 
       - name: package artifacts
         run: ./deploy/deploy.sh package
 
-      - name: create release
+      - name: save artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: package
+          path: |
+            dist/openblazer.exe
+            dist/openblazer.x64
+            dist/openblazer.msix
+          if-no-files-found: error
+
+  nightly:
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/download-artifact@v4
+        with:
+          name: package
+          path: dist
+      - name: replace nightly release
+        run: ./deploy/deploy.sh release
+        env:
+          GH_TOKEN: "${{ github.token }}"
+
+  production:
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/download-artifact@v4
+        with:
+          name: package
+          path: dist
+      - name: install Microsoft Store CLI
+        uses: microsoft/microsoft-store-apppublisher@v1.3
+      - name: install Store dependencies
+        run: ./deploy/deploy.sh install-store
+      - name: publish release
         run: ./deploy/deploy.sh release
         env:
           GH_TOKEN: "${{ github.token }}"
