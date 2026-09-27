@@ -2,7 +2,7 @@
 set -euo pipefail
 
 main() {
-    THIS_SCRIPT=$(readlink -e "$0")
+    THIS_SCRIPT=$(realpath -e "$0")
     DIR_THIS_SCRIPT=$(dirname "$THIS_SCRIPT")
     DIR_GAME="$PWD/game"
     DIR_DIST="$PWD/dist"
