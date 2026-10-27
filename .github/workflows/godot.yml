@@ -32,7 +32,6 @@ jobs:
       run: ./deploy/deploy.sh install
 
     - name: package artifacts
-      id: package
       run: ./deploy/deploy.sh package
 
     - name: save artifacts
