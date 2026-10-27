@@ -19,30 +19,29 @@ jobs:
       contents: read
 
     steps:
-      - name: checkout
-        uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
+    - name: checkout
+      uses: actions/checkout@v6
+      with:
+        fetch-depth: 0
 
-      - name: check deployment script
-        run: |
-          bash -n ./deploy/deploy.sh
+    - name: check deployment script
+      run: bash -n ./deploy/deploy.sh
 
-      - name: install tools
-        run: ./deploy/deploy.sh install
+    - name: install tools
+      run: ./deploy/deploy.sh install
 
-      - name: package artifacts
-        run: ./deploy/deploy.sh package
+    - name: package artifacts
+      run: ./deploy/deploy.sh package
 
-      - name: save artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: package
-          path: |
-            dist/openblazer.exe
-            dist/openblazer.x64
-            dist/openblazer.msix
-          if-no-files-found: error
+    - name: save artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: package
+        path: |
+          dist/openblazer.exe
+          dist/openblazer.x64
+          dist/openblazer.msix
+        if-no-files-found: error
 
   nightly:
     if: github.ref == 'refs/heads/main'
@@ -51,17 +50,19 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-      - uses: actions/download-artifact@v4
-        with:
-          name: package
-          path: dist
-      - name: replace nightly release
-        run: ./deploy/deploy.sh release
-        env:
-          GH_TOKEN: "${{ github.token }}"
+    - uses: actions/checkout@v6
+      with:
+        fetch-depth: 0
+
+    - uses: actions/download-artifact@v4
+      with:
+        name: package
+        path: dist
+
+    - name: replace nightly release
+      run: ./deploy/deploy.sh release
+      env:
+        GH_TOKEN: "${{ github.token }}"
 
   production:
     if: startsWith(github.ref, 'refs/tags/')
@@ -70,23 +71,27 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-      - uses: actions/download-artifact@v4
-        with:
-          name: package
-          path: dist
-      - name: install Microsoft Store CLI
-        uses: microsoft/microsoft-store-apppublisher@v1.3
-      - name: install Store dependencies
-        run: ./deploy/deploy.sh install-store
-      - name: publish release
-        run: ./deploy/deploy.sh release
-        env:
-          GH_TOKEN: "${{ github.token }}"
-          MSSTORE_STORE_ID:      "${{ secrets.STORE_ID      }}"
-          MSSTORE_SELLER_ID:     "${{ secrets.SELLER_ID     }}"
-          MSSTORE_TENANT_ID:     "${{ secrets.TENANT_ID     }}"
-          MSSTORE_CLIENT_ID:     "${{ secrets.CLIENT_ID     }}"
-          MSSTORE_CLIENT_SECRET: "${{ secrets.CLIENT_SECRET }}"
+    - uses: actions/checkout@v6
+      with:
+        fetch-depth: 0
+
+    - uses: actions/download-artifact@v4
+      with:
+        name: package
+        path: dist
+
+    - name: install Microsoft Store CLI
+      uses: microsoft/microsoft-store-apppublisher@v1.3
+
+    - name: install Store dependencies
+      run: ./deploy/deploy.sh install-store
+
+    - name: publish release
+      run: ./deploy/deploy.sh release
+      env:
+        GH_TOKEN: "${{ github.token }}"
+        MSSTORE_STORE_ID:      "${{ secrets.STORE_ID      }}"
+        MSSTORE_SELLER_ID:     "${{ secrets.SELLER_ID     }}"
+        MSSTORE_TENANT_ID:     "${{ secrets.TENANT_ID     }}"
+        MSSTORE_CLIENT_ID:     "${{ secrets.CLIENT_ID     }}"
+        MSSTORE_CLIENT_SECRET: "${{ secrets.CLIENT_SECRET }}"
